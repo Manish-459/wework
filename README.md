@@ -182,3 +182,9 @@ curl -X DELETE http://localhost:5000/habits/
 AI Suggestions:
 curl -X POST http://localhost:5000/habits/suggest-habits
  -H "Content-Type: application/json" -d "{"goal":"get fit"}"
+
+ ![Screenshot 1](image.png)
+
+![Screenshot 2](image-1.png)
+
+
