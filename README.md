@@ -63,9 +63,18 @@ POST /habits
 css
 Copy code
 
-### Body:
+## 📌 API Endpoints (Backend)
+
+---
+
+### **1️⃣ Create Habit**
+**POST /habits**
+
+#### Body:
 ```json
-{ "name": "Drink Water" }
+{
+  "name": "Drink Water"
+}
 Response:
 json
 Copy code
@@ -76,36 +85,35 @@ Copy code
   "lastCompleted": null
 }
 2️⃣ Get All Habits
-bash
-Copy code
 GET /habits
+
 3️⃣ Complete Habit
-bash
-Copy code
 PATCH /habits/:id/complete
-Updates:
+
+Updates performed:
 
 streak += 1
 
 lastCompleted = YYYY-MM-DD
 
 4️⃣ Delete Habit
-bash
-Copy code
 DELETE /habits/:id
-Response:
 
+Response:
 json
 Copy code
-{ "message": "Habit deleted" }
+{
+  "message": "Habit deleted"
+}
 5️⃣ AI Habit Suggestions
-bash
-Copy code
 POST /habits/suggest-habits
+
 Body:
 json
 Copy code
-{ "goal": "gain muscle" }
+{
+  "goal": "gain muscle"
+}
 Response:
 json
 Copy code
@@ -123,7 +131,7 @@ Copy code
   "lastCompleted": null
 }
 📍 Data Storage
-Data is stored in:
+Your habits are stored in:
 
 bash
 Copy code
@@ -142,17 +150,15 @@ const newHabit = {
   streak: 0,
   lastCompleted: null
 };
-Optional: Filter by company
-Add inside GET route:
-
+Filtering habits by company:
 js
 Copy code
 if (req.query.company) {
   habits = habits.filter(h => h.company === req.query.company);
 }
 🎨 Frontend (React + Vite)
-The frontend is currently the default Vite template.
-You must add components:
+The frontend is currently a Vite React template.
+You must create these components:
 
 HabitForm.jsx
 
@@ -168,32 +174,32 @@ await fetch("http://localhost:5000/habits", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ name, company })
 });
-▶️ How to Run
+▶️ How to Run the Project
 Backend
 bash
 Copy code
 cd backend
 npm install
 node src/app.js
-Ensure this exists:
+Make sure this file exists:
 
 css
 Copy code
 src/data/habits.json → []
 Frontend
-arduino
+bash
 Copy code
 cd frontend
 npm install
 npm run dev
-📌 API Example (cURL)
+📌 API Examples (cURL)
 Create Habit
-swift
+bash
 Copy code
 curl -X POST http://localhost:5000/habits \
 -H "Content-Type: application/json" \
 -d "{\"name\":\"Read Docs\"}"
-Get All
+Get All Habits
 bash
 Copy code
 curl http://localhost:5000/habits
@@ -201,17 +207,17 @@ Mark Completed
 bash
 Copy code
 curl -X PATCH http://localhost:5000/habits/<id>/complete
-Delete
+Delete Habit
 bash
 Copy code
 curl -X DELETE http://localhost:5000/habits/<id>
 AI Suggestions
-swift
+bash
 Copy code
 curl -X POST http://localhost:5000/habits/suggest-habits \
 -H "Content-Type: application/json" \
 -d "{\"goal\":\"get fit\"}"
 🖼 Add Screenshot (Optional)
-scss
+markdown
 Copy code
 ![App Screenshot](your-image-path.png)
