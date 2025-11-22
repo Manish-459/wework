@@ -47,118 +47,90 @@ Copy code
 
 ---
 
-# 🛠 Backend API (All Routes)
-
-Assumes routes are mounted as:
-app.use("/habits", habitRoutes);
-
-yaml
-Copy code
-
----
-
-## 1️⃣ Create Habit
-POST /habits
-
-css
-Copy code
-
-## 📌 API Endpoints (Backend)
-
----
-
-### **1️⃣ Create Habit**
-**POST /habits**
-
-#### Body:
-```json
-{
-  "name": "Drink Water"
-}
-Response:
-json
-Copy code
-{
-  "id": "uuid",
-  "name": "Drink Water",
-  "streak": 0,
-  "lastCompleted": null
-}
-2️⃣ Get All Habits
-GET /habits
-
-3️⃣ Complete Habit
-PATCH /habits/:id/complete
-
-Updates performed:
-
-streak += 1
-
-lastCompleted = YYYY-MM-DD
-
-4️⃣ Delete Habit
-DELETE /habits/:id
-
-Response:
-json
-Copy code
-{
-  "message": "Habit deleted"
-}
-5️⃣ AI Habit Suggestions
-POST /habits/suggest-habits
+Create Habit (POST /habits)
 
 Body:
-json
-Copy code
 {
-  "goal": "gain muscle"
+"name": "Drink Water"
 }
+
 Response:
-json
-Copy code
 {
-  "goal": "gain muscle",
-  "suggestions": ["habit1", "habit2"]
+"id": "uuid",
+"name": "Drink Water",
+"streak": 0,
+"lastCompleted": null
 }
-📦 Habit Object Format
-json
-Copy code
-{
-  "id": "uuid",
-  "name": "Read Books",
-  "streak": 0,
-  "lastCompleted": null
-}
-📍 Data Storage
-Your habits are stored in:
 
-bash
-Copy code
+Get All Habits (GET /habits)
+
+GET /habits
+
+Complete Habit (PATCH /habits/:id/complete)
+
+Updates:
+
+streak increases by 1
+
+lastCompleted becomes today’s date (YYYY-MM-DD)
+
+Delete Habit (DELETE /habits/:id)
+
+Response:
+{
+"message": "Habit deleted"
+}
+
+AI Habit Suggestions (POST /habits/suggest-habits)
+
+Body:
+{
+"goal": "gain muscle"
+}
+
+Response:
+{
+"goal": "gain muscle",
+"suggestions": ["habit1", "habit2"]
+}
+
+Habit Object Format
+
+{
+"id": "uuid",
+"name": "Read Books",
+"streak": 0,
+"lastCompleted": null
+}
+
+Data Storage
+
+Stored in:
 src/data/habits.json
-🏢 Adding a company Field (Optional)
-Modify the POST route:
 
-js
-Copy code
+Add Company Field (optional)
+
+POST route change:
+
 const { name, company } = req.body;
 
 const newHabit = {
-  id: uuidv4(),
-  name,
-  company: company || null,
-  streak: 0,
-  lastCompleted: null
+id: uuidv4(),
+name,
+company: company || null,
+streak: 0,
+lastCompleted: null
 };
-Filtering habits by company:
-js
-Copy code
+
+Filter by company in GET:
+
 if (req.query.company) {
-  habits = habits.filter(h => h.company === req.query.company);
+habits = habits.filter(h => h.company === req.query.company);
 }
-🎨 Frontend (React + Vite)
-The frontend is currently a Vite React template.
-You must create these components:
+
+Frontend Work Needed
+
+You must create:
 
 HabitForm.jsx
 
@@ -167,57 +139,46 @@ HabitList.jsx
 HabitItem.jsx
 
 Example API call:
-js
-Copy code
-await fetch("http://localhost:5000/habits", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ name, company })
+
+await fetch("http://localhost:5000/habits
+", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ name, company })
 });
-▶️ How to Run the Project
-Backend
-bash
-Copy code
+
+Run Backend
+
 cd backend
 npm install
 node src/app.js
-Make sure this file exists:
 
-css
-Copy code
-src/data/habits.json → []
-Frontend
-bash
-Copy code
+Make sure:
+src/data/habits.json contains []
+
+Run Frontend
+
 cd frontend
 npm install
 npm run dev
-📌 API Examples (cURL)
-Create Habit
-bash
-Copy code
-curl -X POST http://localhost:5000/habits \
--H "Content-Type: application/json" \
--d "{\"name\":\"Read Docs\"}"
-Get All Habits
-bash
-Copy code
+
+API Example Commands
+
+Create Habit:
+curl -X POST http://localhost:5000/habits
+ -H "Content-Type: application/json" -d "{"name":"Read Docs"}"
+
+Get All:
 curl http://localhost:5000/habits
-Mark Completed
-bash
-Copy code
-curl -X PATCH http://localhost:5000/habits/<id>/complete
-Delete Habit
-bash
-Copy code
-curl -X DELETE http://localhost:5000/habits/<id>
-AI Suggestions
-bash
-Copy code
-curl -X POST http://localhost:5000/habits/suggest-habits \
--H "Content-Type: application/json" \
--d "{\"goal\":\"get fit\"}"
-🖼 Add Screenshot (Optional)
-markdown
-Copy code
-![App Screenshot](your-image-path.png)
+
+Mark Completed:
+curl -X PATCH http://localhost:5000/habits/
+<id>/complete
+
+Delete:
+curl -X DELETE http://localhost:5000/habits/
+<id>
+
+AI Suggestions:
+curl -X POST http://localhost:5000/habits/suggest-habits
+ -H "Content-Type: application/json" -d "{"goal":"get fit"}"
